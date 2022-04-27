@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><title>Mario Like</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.51.0/dist/phaser.js">
+    </script>
+
+    <style type="text/css"> body 
+    
+        { margin: 0; 
+        }
+ 
+        #endGame{
+            display: none;
+            font-size: 100px;
+            color: red;
+            padding-top: 230px;
+            padding-left:110px ;
+            position:absolute;
+            z-index:1
+        }
+
+        
+    
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+
+        //Problèmes en cours : Finir animation menu
+        //                     Collisions escaliers
+        //                     Double-Saut
+
+
+
+
+
+
+// Ma classe de menu, la toute première image qui s'affichera au lancement du jeu
+        /*
+
+        class menu extends Phaser.Scene{
+            constructor() {
+                super("menu");
+            }
+            preload(){
+                this.load.image('imagestart', 'assets/bouton_start.png')
+                this.load.image('boutonplay', 'assets/bouton_play.png')
+                this.load.image('boutonquit', 'assets/bouton_quit.png')
+            }
+            create (){
+                this.add.image(510, 290, 'imagestart');
+
+                this.cursors = this.input.keyboard.createCursorKeys();
+
+                var boutonplay = this.add.image(629, 215, 'boutonplay').setInteractive();
+
+                boutonplay.on('pointerdown', function (pointer) {
+
+                    this.scene.scene.start("Exterieur");
+
+                });
+
+                var boutonquit = this.add.image(399, 215, 'boutonquit').setInteractive();
+
+                boutonquit.on('pointerdown', function (pointer) {
+                    this.scene.scene.stop("menu");
+                });
+            }
+            update(){
+
+            }
+        };
+
+*/
+
+// Ici, je définis ma première scène, l'endroit ou débutera le joueur
+
+        class debut extends Phaser.Scene{
+            constructor(){
+                super("debut");
+        }
+
+        
+          
+// Ma fonction preload qui me permet d'introduire tous mes fichiers : Animation, Tileset etc....
+        preload(){
+
+            this.load.image("jeudetuile", "assets/Assets.png");
+            this.load.image("arriereplan", "assets/Background.png");
+
+            this.load.tilemapTiledJSON("cartedebut", "mapdebut.json");  
+
+            this.load.spritesheet('Spritewalkright','assets/Spritewalkright.png',
+            { frameWidth: 44, frameHeight: 21 });
+            this.load.spritesheet('Spritewalkleft','assets/Spritewalkleft.png',
+            { frameWidth: 44, frameHeight: 21 });
+            this.load.spritesheet('Spritenowalk','assets/Spritenowalk.png',
+            { frameWidth: 33, frameHeight: 21 });
+            this.load.spritesheet('Spriteattente','assets/Spriteattente.png',
+            { frameWidth: 20, frameHeight: 36 });
+            this.load.spritesheet('Spriteattackright','assets/Spriteattackright.png',
+            { frameWidth: 57, frameHeight: 37 });
+            this.load.spritesheet('Spriteattackleft','assets/Spriteattackleft.png',
+            { frameWidth: 57, frameHeight: 37 });
+        
+            
+        }
+
+
+// Ma fonction create qui me permet de créer des collisions, des timers ou même ma map
+        create (){
+            this.clavier = this.input.keyboard.addKeys('A,D,SPACE,E,R');
+            this.cursors = this.input.keyboard.createCursorKeys(); 
+            this.permission = true
+            this.compteur = 60
+            this.patience = false
+            this.decompte = 30
+            
+            
+            const carteDuNiveau = this.add.tilemap("cartedebut");
+
+            // importer les TileSet 
+            
+            const Assets = carteDuNiveau.addTilesetImage(
+                    "Assets",
+                    "jeudetuile"
+                    ); 
+                    
+            const Background = carteDuNiveau.addTilesetImage(
+                    "Background",
+                    "arriereplan"
+                    ); 
+
+            const Montagnes = carteDuNiveau.createLayer(
+                    "Montagnes",
+                    Background, 
+                    );
+                    
+            const Pascollisions = carteDuNiveau.createLayer(
+                    "Pascollisions",
+                    Assets, 
+                    );  
+
+            const plateformes = carteDuNiveau.createLayer(
+                    "Collisions",
+                    Assets, 
+                    ); 
+            
+
+            
+            
+        
+            this.player = this.physics.add.sprite(70,400,'Spritenowalk')    //1230 , 100    700, 570
+
+
+            plateformes.setCollisionByProperty({ estSolide: true });
+
+
+           
+            this.physics.add.collider(this.player, plateformes);
+            this.physics.add.collider(this.player, plateformes, this.verification, null, this);
+            this.physics.world.setBounds(0, 0, 14880, 448);
+            this.cameras.main.setBounds(0, 0, 14880, 448);
+            this.cameras.main.startFollow(this.player); 
+
+// création animation personnage
+
+                this.anims.create({
+                    key: 'right',
+                    frames: this.anims.generateFrameNumbers('Spritewalkright', {start:0,end:5}),
+                    frameRate: 10,
+                    repeat: -1
+            });
+                this.anims.create({
+                    key: 'left',
+                    frames: this.anims.generateFrameNumbers('Spritewalkleft', {start:0,end:5}),
+                    frameRate: 10,
+                    repeat: -1
+                });
+                this.anims.create({
+                    key: 'turn',
+                    frames: this.anims.generateFrameNumbers('Spritenowalk', {start:0,end:5}),
+                    frameRate: 10,
+                    repeat: -1,
+                });
+                this.anims.create({
+                    key: 'wait',
+                    frames: this.anims.generateFrameNumbers('Spriteattente', {start:0,end:29}),
+                    frameRate: 10,
+                    repeat: -1,
+                })
+                this.anims.create({
+                    key: 'attackright',
+                    frames: this.anims.generateFrameNumbers('Spriteattackright', {start:0,end:8}),
+                    frameRate: 10,
+                    repeat: -1,
+                })
+                this.anims.create({
+                    key: 'attackleft',
+                    frames: this.anims.generateFrameNumbers('Spriteattackleft', {start:0,end:8}),
+                    frameRate: 10,
+                    repeat: -1,
+                })
+
+// Le zoom    
+        this.cameras.main.zoom = 3;
+
+        }
+
+// Ma fonction update qui me permet d'attribuer une vitesse à la pression des touches etc...        
+        update(){
+
+            if (this.cursors.left.isDown || this.clavier.A.isDown){ //si la touche gauche est appuyée
+                this.decompte = 30;
+                this.player.setVelocityX(-160); //alors vitesse négative en X
+                this.player.anims.play('left', true); //et animation => gauche
+        }
+            else if (this.cursors.right.isDown || this.clavier.D.isDown){ //sinon si la touche droite est appuyée
+                this.decompte = 30;
+                this.player.setVelocityX(160); //alors vitesse positive en X
+                this.player.anims.play('right', true); //et animation => droite
+        }     
+            else if(this.clavier.E.isDown){
+                this.player.anims.play('attackright', true); //et animation => droite
+            }
+            else if(this.clavier.R.isDown){
+                
+                this.player.anims.play('attackleft', true); //et animation => droite
+            }
+    
+            else{ // sinon
+                this.player.setVelocityX(0); //vitesse nulle
+                this.player.anims.play('turn', true); //animation fait face caméra
+                this.decompte -= 1;
+                
+                }
+                
+            
+            if(this.cursors.up.isDown && this.player.body.onFloor() || this.clavier.SPACE.isDown && this.player.body.onFloor()){
+                console.log("bonjour")
+                //si touche haut appuyée ET que le perso touche le sol
+                this.player.setVelocityY(-230); //alors vitesse verticale négative
+                //(on saute)
+
+        }     
+                
+        }
+
+        
+    }
+
+
+// Ma config qui contient des éléments comma la gravité ou même toutes mes scènes repertoriées
+    var config = {
+            pixelArt: true,
+            type: Phaser.AUTO,
+            width: 1280, height: 720,
+            physics: {
+            default: 'arcade',
+            arcade: {
+            gravity: { y: 400 },
+            debug: true
+            }},
+            scene: [debut],
+            input : {gamepad:true},
+            };
+            
+
+            new Phaser.Game(config);     
+
+        
+    </script>
+</body>
+</html>
