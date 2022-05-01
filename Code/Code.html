@@ -90,19 +90,18 @@
             this.load.image("arriereplan", "assets/Background.png");
 
             this.load.tilemapTiledJSON("cartedebut", "mapdebut.json");  
+            this.load.spritesheet('Spriteaventurier','assets/Spriteaventurier.png',
+            { frameWidth: 64, frameHeight: 64 });
+            this.load.spritesheet('Spritecoin','assets/Spritecoin.png',
+            { frameWidth: 64, frameHeight: 64 });
+            this.load.spritesheet('Spritebat','assets/Spritebat.png',
+            { frameWidth: 32, frameHeight: 32 });
+            this.load.image("Health100", "assets/Spritehealthbar100.png");
+            this.load.image("Health75", "assets/Spritehealthbar75.png");
+            this.load.image("Health50", "assets/Spritehealthbar50.png");
+            this.load.image("Health25", "assets/Spritehealthbar25.png");
+            this.load.image("Health0", "assets/Spritehealthbar0.png");
 
-            this.load.spritesheet('Spritewalkright','assets/Spritewalkright.png',
-            { frameWidth: 44, frameHeight: 21 });
-            this.load.spritesheet('Spritewalkleft','assets/Spritewalkleft.png',
-            { frameWidth: 44, frameHeight: 21 });
-            this.load.spritesheet('Spritenowalk','assets/Spritenowalk.png',
-            { frameWidth: 33, frameHeight: 21 });
-            this.load.spritesheet('Spriteattente','assets/Spriteattente.png',
-            { frameWidth: 20, frameHeight: 36 });
-            this.load.spritesheet('Spriteattackright','assets/Spriteattackright.png',
-            { frameWidth: 57, frameHeight: 37 });
-            this.load.spritesheet('Spriteattackleft','assets/Spriteattackleft.png',
-            { frameWidth: 57, frameHeight: 37 });
         
             
         }
@@ -151,7 +150,112 @@
             
             
         
-            this.player = this.physics.add.sprite(70,400,'Spritenowalk')    //1230 , 100    700, 570
+            this.player = this.physics.add.sprite(70,400,'Spriteaventurier').setSize(13,21).setOffset(25,21)    //70, 400
+            this.ennemi = this.physics.add.sprite(760,315,'Spritebat')
+            this.ennemi.scale = 0.7; 
+
+// Regrouper toutes mes pièces
+        this.coin = this.physics.add.staticGroup();
+            this.coin = this.physics.add.sprite(392, 360,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin1 = this.physics.add.sprite(408, 360,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin2 = this.physics.add.sprite(424, 360,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin3 = this.physics.add.sprite(392, 344,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin4 = this.physics.add.sprite(408, 344,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin5 = this.physics.add.sprite(424, 344,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin6 = this.physics.add.sprite(392, 328,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin7 = this.physics.add.sprite(408, 328,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin8 = this.physics.add.sprite(424, 328,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin9 = this.physics.add.sprite(584, 184,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin10 = this.physics.add.sprite(568, 184,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin11 = this.physics.add.sprite(552, 184,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin12 = this.physics.add.sprite(536, 184,'Spritecoin').setSize(16,16).setOffset(24,24)
+
+            this.coin13 = this.physics.add.sprite(648, 120,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin14 = this.physics.add.sprite(664, 120,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin15 = this.physics.add.sprite(680, 120,'Spritecoin').setSize(16,16).setOffset(24,24)
+
+            this.coin16 = this.physics.add.sprite(1720, 232,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin17 = this.physics.add.sprite(1736, 232,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin18 = this.physics.add.sprite(1768, 232,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin19 = this.physics.add.sprite(1784, 232,'Spritecoin').setSize(16,16).setOffset(24,24)
+
+            this.coin20 = this.physics.add.sprite(1816, 184,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin21 = this.physics.add.sprite(1832, 184,'Spritecoin').setSize(16,16).setOffset(24,24)
+
+            this.coin22 = this.physics.add.sprite(1704, 136,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin23 = this.physics.add.sprite(1688, 136,'Spritecoin').setSize(16,16).setOffset(24,24)
+
+            this.coin24 = this.physics.add.sprite(1816, 104,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin25 = this.physics.add.sprite(1832, 104,'Spritecoin').setSize(16,16).setOffset(24,24)
+
+            this.coin26 = this.physics.add.sprite(2088, 312,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin27 = this.physics.add.sprite(2104, 312,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin28 = this.physics.add.sprite(2120, 312,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin29 = this.physics.add.sprite(2136, 312,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin30 = this.physics.add.sprite(2152, 312,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin31 = this.physics.add.sprite(2104, 296,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin32 = this.physics.add.sprite(2120, 296,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin33 = this.physics.add.sprite(2136, 296,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin34 = this.physics.add.sprite(2120, 280,'Spritecoin').setSize(16,16).setOffset(24,24)
+
+            this.coin35 = this.physics.add.sprite(2392, 280,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin36 = this.physics.add.sprite(2472, 248,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin37 = this.physics.add.sprite(2392, 200,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin38 = this.physics.add.sprite(2488, 168,'Spritecoin').setSize(16,16).setOffset(24,24)
+            this.coin39 = this.physics.add.sprite(2392, 120,'Spritecoin').setSize(16,16).setOffset(24,24)
+
+            this.coin40 = this.physics.add.sprite(160, 390,'Spritecoin').setSize(16,16).setOffset(24,24)
+// J'empêche la gravité pour chaque pièce
+            this.coin.body.allowGravity = false;
+            this.coin1.body.allowGravity = false;
+            this.coin2.body.allowGravity = false;
+            this.coin3.body.allowGravity = false;
+            this.coin4.body.allowGravity = false;
+            this.coin5.body.allowGravity = false;
+            this.coin6.body.allowGravity = false;
+            this.coin7.body.allowGravity = false;
+            this.coin8.body.allowGravity = false;
+            this.coin9.body.allowGravity = false;
+            this.coin10.body.allowGravity = false;
+            this.coin11.body.allowGravity = false;
+            this.coin12.body.allowGravity = false;
+
+            this.coin13.body.allowGravity = false;
+            this.coin14.body.allowGravity = false;
+            this.coin15.body.allowGravity = false;
+
+            this.coin16.body.allowGravity = false;
+            this.coin17.body.allowGravity = false;
+            this.coin18.body.allowGravity = false;
+            this.coin19.body.allowGravity = false;
+
+            this.coin20.body.allowGravity = false;
+            this.coin21.body.allowGravity = false;
+
+            this.coin22.body.allowGravity = false;
+            this.coin23.body.allowGravity = false;
+
+            this.coin24.body.allowGravity = false;
+            this.coin25.body.allowGravity = false;
+
+            this.coin26.body.allowGravity = false;
+            this.coin27.body.allowGravity = false;
+            this.coin28.body.allowGravity = false;
+            this.coin29.body.allowGravity = false;
+            this.coin30.body.allowGravity = false;
+            this.coin31.body.allowGravity = false;
+            this.coin32.body.allowGravity = false;
+            this.coin33.body.allowGravity = false;
+            this.coin34.body.allowGravity = false;
+
+            this.coin35.body.allowGravity = false;
+            this.coin36.body.allowGravity = false;
+            this.coin37.body.allowGravity = false;
+            this.coin38.body.allowGravity = false;
+            this.coin39.body.allowGravity = false;
+
+            this.coin40.body.allowGravity = false;
+
 
 
             plateformes.setCollisionByProperty({ estSolide: true });
@@ -159,57 +263,165 @@
 
            
             this.physics.add.collider(this.player, plateformes);
+            //this.physics.add.collider(this.player, this.coin40, this.collectcoin());
+            this.physics.add.collider(this.ennemi, plateformes);
+            this.physics.add.collider(this.coin, plateformes);
             this.physics.add.collider(this.player, plateformes, this.verification, null, this);
             this.physics.world.setBounds(0, 0, 14880, 448);
             this.cameras.main.setBounds(0, 0, 14880, 448);
             this.cameras.main.startFollow(this.player); 
+            
 
 // création animation personnage
 
                 this.anims.create({
                     key: 'right',
-                    frames: this.anims.generateFrameNumbers('Spritewalkright', {start:0,end:5}),
+                    frames: this.anims.generateFrameNumbers('Spriteaventurier', {start:30,end:36}),
                     frameRate: 10,
                     repeat: -1
-            });
+                });
                 this.anims.create({
                     key: 'left',
-                    frames: this.anims.generateFrameNumbers('Spritewalkleft', {start:0,end:5}),
+                    frames: this.anims.generateFrameNumbers('Spriteaventurier', {start:71,end:77}),
                     frameRate: 10,
                     repeat: -1
                 });
                 this.anims.create({
                     key: 'turn',
-                    frames: this.anims.generateFrameNumbers('Spritenowalk', {start:0,end:5}),
+                    frames: this.anims.generateFrameNumbers('Spriteaventurier', {start:0,end:6}),
                     frameRate: 10,
                     repeat: -1,
                 });
                 this.anims.create({
                     key: 'wait',
-                    frames: this.anims.generateFrameNumbers('Spriteattente', {start:0,end:29}),
+                    frames: this.anims.generateFrameNumbers('Spriteaventurier', {start:15,end:29}),
                     frameRate: 10,
                     repeat: -1,
                 })
                 this.anims.create({
                     key: 'attackright',
-                    frames: this.anims.generateFrameNumbers('Spriteattackright', {start:0,end:8}),
+                    frames: this.anims.generateFrameNumbers('Spriteaventurier', {start:37,end:42}),
                     frameRate: 10,
                     repeat: -1,
                 })
                 this.anims.create({
                     key: 'attackleft',
-                    frames: this.anims.generateFrameNumbers('Spriteattackleft', {start:0,end:8}),
+                    frames: this.anims.generateFrameNumbers('Spriteaventurier', {start:61,end:66}),
+                    frameRate: 10,
+                    repeat: -1,
+                })
+                this.anims.create({
+                    key: 'jump',
+                    frames: this.anims.generateFrameNumbers('Spriteaventurier', {start:78,end:98}),
+                    frameRate: 10,
+                    repeat: -1,
+                })
+                this.anims.create({
+                    key: 'Spritecoin',
+                    frames: this.anims.generateFrameNumbers('Spritecoin', {start:23,end:27}),
+                    frameRate: 10,
+                    repeat: -1,
+                })
+                this.anims.create({
+                    key: 'Destroycoin',
+                    frames: this.anims.generateFrameNumbers('Spritecoin', {start:0,end:22}),
+                    frameRate: 10,
+                    repeat: -1,
+                })
+                this.anims.create({
+                    key: 'batleft',
+                    frames: this.anims.generateFrameNumbers('Spritebat', {start:0,end:7}),
+                    frameRate: 10,
+                    repeat: -1,
+                })
+                this.anims.create({
+                    key: 'batright',
+                    frames: this.anims.generateFrameNumbers('Spritebat', {start:8,end:15}),
                     frameRate: 10,
                     repeat: -1,
                 })
 
+//Ma barre de vie
+        this.health = this.add.image(460,275, 'Health100')
+        this.health.setScrollFactor(0);
+        this.health.scale = 0.25; 
+
 // Le zoom    
         this.cameras.main.zoom = 3;
+
+        this.swordhitbox = this.add.rectangle(0, 0, 70, 70, 0xffffff, 0)
+        this.swordhitbox.scale = 0.40; 
+        this.physics.add.existing(this.swordhitbox)
+        this.physics.add.collider(this.swordhitbox, plateformes);
+        this.swordhitbox.x = this.player.x + this.player.width * 0.30
+        this.swordhitbox.y = this.player.y
+        this.swordhitbox.setScrollFactor(0);
+        
+        
+        
+
 
         }
 
 // Ma fonction update qui me permet d'attribuer une vitesse à la pression des touches etc...        
         update(){
+
+//Animation de chaque pièce
+            this.coin.anims.play('Spritecoin', true);
+            this.coin1.anims.play('Spritecoin', true);
+            this.coin2.anims.play('Spritecoin', true);
+            this.coin3.anims.play('Spritecoin', true);
+            this.coin4.anims.play('Spritecoin', true);
+            this.coin5.anims.play('Spritecoin', true);
+            this.coin6.anims.play('Spritecoin', true);
+            this.coin7.anims.play('Spritecoin', true);
+            this.coin8.anims.play('Spritecoin', true);
+            this.coin9.anims.play('Spritecoin', true);
+            this.coin10.anims.play('Spritecoin', true);
+            this.coin11.anims.play('Spritecoin', true);
+            this.coin12.anims.play('Spritecoin', true);
+            this.coin13.anims.play('Spritecoin', true);
+            this.coin14.anims.play('Spritecoin', true);
+            this.coin15.anims.play('Spritecoin', true);
+            this.coin16.anims.play('Spritecoin', true);
+            this.coin17.anims.play('Spritecoin', true);
+            this.coin18.anims.play('Spritecoin', true);
+            this.coin19.anims.play('Spritecoin', true);
+            this.coin20.anims.play('Spritecoin', true);
+            this.coin21.anims.play('Spritecoin', true);
+            this.coin22.anims.play('Spritecoin', true);
+            this.coin23.anims.play('Spritecoin', true);
+            this.coin24.anims.play('Spritecoin', true);
+            this.coin25.anims.play('Spritecoin', true);
+            this.coin26.anims.play('Spritecoin', true);
+            this.coin27.anims.play('Spritecoin', true);
+            this.coin28.anims.play('Spritecoin', true);
+            this.coin29.anims.play('Spritecoin', true);
+            this.coin30.anims.play('Spritecoin', true);
+            this.coin31.anims.play('Spritecoin', true);
+            this.coin32.anims.play('Spritecoin', true);
+            this.coin33.anims.play('Spritecoin', true);
+            this.coin34.anims.play('Spritecoin', true);
+            this.coin35.anims.play('Spritecoin', true);
+            this.coin36.anims.play('Spritecoin', true);
+            this.coin37.anims.play('Spritecoin', true);
+            this.coin38.anims.play('Spritecoin', true);
+            this.coin39.anims.play('Spritecoin', true);
+            this.coin40.anims.play('Spritecoin', true);
+
+
+//Ici, je crée une I.A pour mon ennemi, je lui définis un paterne précis
+
+            if(this.ennemi.x <= 770){
+                this.ennemi.setVelocityX(50); //alors vitesse négative en X
+                this.ennemi.anims.play('batright', true); //et animation => gauche
+            }
+            else if(this.ennemi.x >= 1020){
+                this.ennemi.setVelocityX(-50); //alors vitesse négative en X
+                this.ennemi.anims.play('batleft', true); //et animation => gauche
+            }
+        
+
 
             if (this.cursors.left.isDown || this.clavier.A.isDown){ //si la touche gauche est appuyée
                 this.decompte = 30;
@@ -240,13 +452,19 @@
             if(this.cursors.up.isDown && this.player.body.onFloor() || this.clavier.SPACE.isDown && this.player.body.onFloor()){
                 console.log("bonjour")
                 //si touche haut appuyée ET que le perso touche le sol
+                this.player.anims.play('jump', true); //animation fait face caméra
                 this.player.setVelocityY(-230); //alors vitesse verticale négative
+                
                 //(on saute)
 
         }     
                 
         }
-
+        
+        //collectcoin(player, coin40){
+            //this.coin40.anims.play('Destroycoin', true);
+            //this.coin40.disableBody(true, true); // la pièce disparaît
+        //}
         
     }
 
